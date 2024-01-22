@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SettingsApiModel extends Model
+class SettingsApi extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -14,8 +14,7 @@ class SettingsApiModel extends Model
     protected $connection = 'mysql'; // çoklu db bağlantısı olması durumunda kullanılacak
     protected $guarded = ['id'];
 
-    public function updatedBy()
-    {
+    public function updatedBy(){
         return $this->belongsTo(User::class, 'updated_by', 'id');
     }
 

@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('settings_api', function (Blueprint $table) {
+        Schema::create('histories', function (Blueprint $table) {
             $table->id();
-            $table->string('_key')->unique();
-            $table->string('_value', 255);
-            $table->text('description')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->string('item', 255);
+            $table->unsignedBigInteger('item_id');
+            $table->json('history');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('settings_api_models');
+        Schema::dropIfExists('histories');
     }
 };

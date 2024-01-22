@@ -16,8 +16,8 @@ class SettingsSeeder extends Seeder
 
         DB::table('settings_api')->insert([
             [
-                'key' => 'api_security_key',
-                'value' => '1234567890',
+                '_key' => 'api_security_key',
+                '_value' => '1234567890',
                 'description' => 'Required to accept requests',
                 'updated_by' => 1,
                 'created_at' => now(),
