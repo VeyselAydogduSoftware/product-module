@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ProductTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,5 +28,7 @@ Route::group(['name' => 'Api', 'middleware' => ['FakeLogin']], function () {
         return response()->json(auth()->user());
 
     });
+
+    Route::apiResource('product-types', ProductTypeController::class);
 
 });
