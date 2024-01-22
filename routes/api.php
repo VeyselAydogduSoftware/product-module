@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/', function () {
+
+    return response()->json('Hello World');
+
+});
+
+Route::group(['name' => 'Api', 'middleware' => ['FakeLogin']], function () {
+
+    Route::get('/user', function () {
+
+        return response()->json(auth()->user());
+
+    });
+
 });

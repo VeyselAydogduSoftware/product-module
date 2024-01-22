@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Middleware\API;
+namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class ApiRequestSecurity
+class FakeLoginMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,13 +18,11 @@ class ApiRequestSecurity
     public function handle(Request $request, Closure $next): Response
     {
 
-        if($request->header('ApiSecurityKey') && $request->header('ApiSecurityKey') == settings('api', 'api_security_key')){
+        $User = User::find(1);
 
-            return $next($request);
+        Auth::login($User);
 
-        }
-
-        return response()->json('Identy Error', 401);
+        return $next($request);
 
     }
 }
