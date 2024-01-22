@@ -130,7 +130,26 @@ class ProductTypeController extends Controller
     public function destroy(string $id)
     {
 
+        try{
 
+            $DeleteProductType = ProductType::where('id', '=', $id)->delete();
+
+            if(!$DeleteProductType) throw new \Exception('Ürün tipi silinemedi', 500);
+
+            self::StoreHistory($this->ActiveUserId, [
+                'action'        => 'delete',
+                'item'          => 'product_types',
+                'item_id'       => $id,
+                'description'   => 'deleted product type',
+            ]);
+
+            return response()->json($DeleteProductType, 200);
+
+        }catch (\Exception $e) {
+
+            return response()->json($e->getLine() . ' | ' . $e->getMessage(), $e->status ?? 500);
+
+        }
 
 
     }

@@ -26,7 +26,7 @@ trait HistoryProcessTrait{
             $NewHistory->item_id = $Data['item_id'];
 
             if($Data['action'] == 'create') $NewHistory->history = json_encode($Data, JSON_UNESCAPED_UNICODE);
-            if($Data['action'] == 'update') {
+            if(in_array($Data['action'], ['update','delete'])){
 
                     $OldHistory = History::where('item', '=', $Data['item'])
                         ->where('item_id', '=', $Data['item_id'])
