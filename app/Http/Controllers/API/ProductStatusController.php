@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\ProductType;
-use App\Traits\ProductTypeProcessTrait;
+use App\Models\ProductsStatus;
+use App\Traits\ProductStatusProcessTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ProductTypeController extends Controller
+class ProductStatusController extends Controller
 {
 
-    use ProductTypeProcessTrait;
+    use ProductStatusProcessTrait;
 
     protected int $ActiveUserId;
 
@@ -38,15 +38,17 @@ class ProductTypeController extends Controller
 
         try {
 
-            $productTypes = ProductType::with('history', 'products')->get();
+            $productStatus = ProductsStatus::with('history', 'products')->get();
 
-            return response()->json($productTypes->count() ? $productTypes : 'Sisteme kayıtlı ürün tipi bulunamadı', 200);
+            return response()->json($productStatus->count() ? $productStatus : 'Sisteme kayıtlı ürün durumu bulunamadı', 200);
 
         }catch (\Exception $e) {
 
             return response()->json($e->getLine(). ' | '.$e->getMessage(), $e->status ?? 500);
 
         }
+
+
 
     }
 
@@ -60,11 +62,10 @@ class ProductTypeController extends Controller
         try {
 
             $validate   =   $request->validate([
-                'name'          => 'required|string|min:2|max:255',
-                'description'   => 'required|string|min:2|max:255',
+                'name'          => 'required|string|min:2|max:255|unique:product_status,name',
             ]);
 
-            $StoreProductType = self::StoreProductType($this->ActiveUserId, $validate);
+            $StoreProductType = self::StoreProductStatus($this->ActiveUserId, $validate);
 
             return response()->json($StoreProductType, 200);
 
@@ -78,6 +79,7 @@ class ProductTypeController extends Controller
 
     }
 
+
     /**
      * Display the specified resource.
      */
@@ -86,7 +88,7 @@ class ProductTypeController extends Controller
 
         try{
 
-            return response()->json(ProductType::with('history', 'products')->where('id', '=', $id)->first() ?? 'Ürün tipi bulunamadı', 200);
+            return response()->json(ProductsStatus::with('history', 'products')->where('id', '=', $id)->first() ?? 'Ürün durumu bulunamadı', 200);
 
         }catch (\Exception $e) {
 
@@ -106,11 +108,10 @@ class ProductTypeController extends Controller
         try{
 
             $validate   =   $request->validate([
-                'name'          => 'required|string|min:2|max:255',
-                'description'   => 'required|string|min:2|max:255',
+                'name'          => 'required|string|min:2|max:255|unique:product_status,name,'.$id.',id',
             ]);
 
-            $UpdateProductType = self::UpdateProductType($id, $this->ActiveUserId, $validate);
+            $UpdateProductType = self::UpdateProductStatus($id, $this->ActiveUserId, $validate);
 
             return response()->json($UpdateProductType, 200);
 
@@ -130,15 +131,15 @@ class ProductTypeController extends Controller
 
         try{
 
-            $DeleteProductType = ProductType::where('id', '=', $id)->delete();
+            $DeleteProductType = ProductsStatus::where('id', '=', $id)->delete();
 
-            if(!$DeleteProductType) throw new \Exception('Ürün tipi silinemedi', 500);
+            if(!$DeleteProductType) throw new \Exception('Ürün durumu silinemedi', 500);
 
             self::StoreHistory($this->ActiveUserId, [
                 'action'        => 'delete',
-                'item'          => 'product_types',
+                'item'          => 'product_status',
                 'item_id'       => $id,
-                'description'   => 'deleted product type',
+                'description'   => 'deleted product status',
             ]);
 
             return response()->json(true, 200);
@@ -151,5 +152,4 @@ class ProductTypeController extends Controller
 
 
     }
-
 }

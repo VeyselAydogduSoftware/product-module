@@ -11,11 +11,17 @@ class ProductsStatus extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'products_status';
+    protected $table = 'product_status';
     protected $connection = 'mysql';
     protected $guarded = ['id'];
 
     public function history(){
         return $this->belongsTo(History::class, 'history_id', 'id');
     }
+
+    public function products(){
+        return $this->hasMany(Products::class, 'status_id', 'id');
+    }
+
+
 }

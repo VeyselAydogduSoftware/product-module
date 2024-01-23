@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('histories', function (Blueprint $table) {
+        Schema::create('history_product_process', function (Blueprint $table) {
             $table->id();
             $table->string('item', 255);
             $table->unsignedBigInteger('item_id');

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\ProductStatusController;
 use App\Http\Controllers\API\ProductTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +31,13 @@ Route::group(['name' => 'Api', 'middleware' => ['FakeLogin']], function () {
 
     });
 
+    Route::group(['name' => 'products'], function (){
+
+        Route::post('product-search', [ProductController::class, 'search']);
+        Route::apiResource('product', ProductController::class);
+
+    });
     Route::apiResource('product-types', ProductTypeController::class);
+    Route::apiResource('product-status', ProductStatusController::class);
 
 });

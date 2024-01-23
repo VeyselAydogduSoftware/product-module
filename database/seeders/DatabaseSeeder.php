@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Seeders\API\FakeUserSeeder;
+use Database\Seeders\API\ProductSeeder;
 use Database\Seeders\API\SettingsSeeder;
 use Illuminate\Database\Seeder;
 
@@ -16,7 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             SettingsSeeder::class,
-            FakeUserSeeder::class
+            FakeUserSeeder::class,
+            ProductSeeder::class
         ]);
     }
 }
