@@ -11,7 +11,7 @@ Add "ApiSecurityKey" : "1234567890" in the Header in each request so that you ca
 
 ## Fake User Login
 
-automatic user login middleware is written in app/Http/Middleware/FakeLoginMiddleware.php file.
+Automatic user login middleware is written in app/Http/Middleware/FakeLoginMiddleware.php file.
 ## Install project
 
 Clone the project
@@ -43,7 +43,7 @@ Set up a database
 ```
 
   
-## Kullanılan Teknolojiler
+## Used technologies
 
 Laravel 10x, Rest Api
   
