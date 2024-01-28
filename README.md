@@ -1,5 +1,5 @@
 
-# Basic Product Module
+# Basic Product Module -API
 
 It is a test project, a simple product module has been prepared.
 
